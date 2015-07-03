@@ -44,7 +44,18 @@ class TwigFileExtractor implements FileVisitorInterface, \Twig_NodeVisitorInterf
         $this->stack[] = $node;
 
         if ($node instanceof TransNode) {
-            $id = $node->getNode('body')->getAttribute('data');
+            $body = $node->getNode('body');
+
+            if ($body instanceof \Twig_Node_Expression_Constant) {
+                $id = $body->getAttribute('value');
+            } elseif ($body instanceof \Twig_Node_Text) {
+                $id = $body->getAttribute('data');
+            } else {
+                $id = $body;
+            }
+
+            $id = str_replace('%%', '%', trim($id));
+
             $domain = 'messages';
             if (null !== $domainNode = $node->getNode('domain')) {
                 $domain = $domainNode->getAttribute('value');
