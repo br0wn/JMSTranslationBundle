@@ -57,9 +57,9 @@ final class Config
             }
         }
 
-        if (empty($scanDirs)) {
-            throw new InvalidArgumentException('You must pass at least one directory which should be scanned.');
-        }
+//        if (empty($scanDirs)) {
+//            throw new InvalidArgumentException('You must pass at least one directory which should be scanned.');
+//        }
 
         foreach ($scanDirs as $k => $dir) {
             if (!is_dir($dir)) {
